@@ -38,7 +38,7 @@ gulp.task('copy-html', function(){
 
 // Copy static files from dev/src folder (but not bower_components) to build folders in dist/src folder
 gulp.task('copy-static', function(){
-    return gulp.src(['./dev/src/**/*.*', '!./dev/src/bower_components{,/**}'])
+    return gulp.src(['./dev/src/**/*.*', '!./dev/src/css{,/**}', '!./dev/src/bower_components{,/**}'])
     .pipe(gulp.dest(config.destDir + '/src'))
     .pipe(reload({stream:true}));
 });
@@ -54,10 +54,12 @@ gulp.task('js-deps', function(){
 
 gulp.task('css-deps', function(){
   return gulp.src([
-    'node_modules/materialize-css/dist/css/materialize.min.css'
+    'node_modules/materialize-css/dist/css/materialize.min.css',
+    './dev/src/css/*.*'
   ])
-  .pipe(concat('css-deps.css'))
-  .pipe(gulp.dest(config.destDir + '/src/css'));
+  .pipe(concat('style.css'))
+  .pipe(gulp.dest(config.destDir + '/src/css'))
+  .pipe(reload({stream:true}));
 });
 
 gulp.task('fonts-deps', function(){
@@ -83,8 +85,10 @@ gulp.task('watch', function() {
   gulp.watch('./dev/app/**/*.js', ['build-js']); 
   // watch all html template file changes
   gulp.watch('./dev/**/*.html', ['copy-html']); 
-  // wath all static file changes
-  gulp.watch(['./dev/src/**/*.*', '!./dev/src/bower_components{,/**}'], ['copy-static']);
+  // watch css
+  gulp.watch('./dev/src/css/*.*', ['css-deps']); 
+  // watch static files
+  gulp.watch(['./dev/src/**/*.*', '!./dev/src/css/*.*', '!./dev/src/bower_components{,/**}'], ['copy-static']); 
 });
 
 // Default task. This will be run when no task is passed in arguments to $ gulp
@@ -97,5 +101,13 @@ gulp.task('run',[
   'fonts-deps'
 ]);
 gulp.task('default', ['run'], function() {
-    gulp.start('startServer', 'watch');
+  gulp.start('startServer', 'watch');
+  // restart Gulp watch if new file added
+  gulp.watch('src/**/*', {cwd: './dev/'}, function(event) {
+    if (event.type === 'added') {
+      setTimeout(function() {
+        gulp.start('watch');
+      }, 1000);
+    }
+  });
 });
