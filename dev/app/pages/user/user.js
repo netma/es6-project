@@ -1,17 +1,25 @@
+import { userSkeleton } from './user.ui';
+
 export class UserPage {
-  constructor(app, formData) {
+  constructor(app, fb, user) {
     this.app = app;
-    this.formData = formData;
+    this.fb = fb;
+    this.user = user;
     this.initUI();
   }
 
   initUI() {
-    this.app.innerHTML = '';
-    let contentHtml = `
-      <section>
-        <h1>Hello ${this.formData.username}</h1>
-      </section>
-    `;
+    if (document.getElementsByTagName('section')[0]) {
+      document.getElementsByTagName('section')[0].parentNode.removeChild(document.getElementsByTagName('section')[0]);
+    }
+    let contentHtml = this.getPageSkeleton();
     this.app.insertAdjacentHTML('afterbegin', contentHtml);
+    console.log(this.user.uid);
+  }
+
+  getPageSkeleton(user) {
+    let data = {};
+    data.username = this.user.email.split('@')[0];
+    return userSkeleton(data);
   }
 }

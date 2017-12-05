@@ -1,4 +1,5 @@
-import { HomePage } from './pages/home/home';
+import { LoginPage } from './pages/login/login';
+import { UserPage } from './pages/user/user';
 import { FirebaseProvider } from './providers/firebase/firebase-provider';
 
 class MyApp {
@@ -11,9 +12,9 @@ class MyApp {
   start() {
     this.fb.auth.onAuthStateChanged(user=>{
       if (user) {
-        alert('TODO');
+        new UserPage(this.app, this.fb, user);
       } else {
-        new HomePage(this.app, this.fb);
+        new LoginPage(this.app, this.fb);
       }
     });
   }
