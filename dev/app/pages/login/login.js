@@ -18,6 +18,12 @@ export class LoginPage {
     this.loadEventUI();
   }
 
+  getPageSkeleton() {
+    let data = {};
+    data.title = this.title;
+    return loginSkeleton(data);
+  }
+
   loadEventUI() {
     let loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', event=>this.onLogin(event));
@@ -25,27 +31,20 @@ export class LoginPage {
     // switchForm
     document.getElementById('switchForm').addEventListener('click', event=> {
       event.preventDefault();
-      console.log([...document.getElementById('switchForm').classList].includes('create'))
       switch ([...document.getElementById('switchForm').classList].includes('create')) {
         case false:
-          document.getElementById('switchForm').classList.toggle('create')
-          document.getElementById('switchForm').innerHTML = 'Click here to login with existing account'
-          document.forms[0].querySelector('button').innerHTML = 'Create an account'
+          document.getElementById('switchForm').classList.toggle('create');
+          document.getElementById('switchForm').innerHTML = 'Click here to login with existing account';
+          document.forms[0].querySelector('button').innerHTML = 'Create an account';
           break;
         case true:
-          document.getElementById('switchForm').classList.toggle('create')
-          document.getElementById('switchForm').innerHTML = 'Click here to create new account'
-          document.forms[0].querySelector('button').innerHTML = 'Login'
+          document.getElementById('switchForm').classList.toggle('create');
+          document.getElementById('switchForm').innerHTML = 'Click here to create new account';
+          document.forms[0].querySelector('button').innerHTML = 'Login';
           break;
         default:
       }
     })
-  }
-
-  getPageSkeleton() {
-    let data = {};
-    data.title = this.title;
-    return loginSkeleton(data);
   }
 
   onLogin(event) {
