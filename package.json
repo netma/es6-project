@@ -25,7 +25,6 @@
   "dependencies": {
     "firebase": "^4.7.0",
     "jquery": "^3.2.1",
-    "materialize-css": "^0.100.2",
-    "unsplash-js": "^4.7.0"
+    "materialize-css": "^0.100.2"
   }
 }

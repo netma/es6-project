@@ -1,5 +1,6 @@
 import { userSkeleton } from './user.ui';
 import { TimeComponent } from '../../components/time/time-component';
+import { BackgroundComponent } from '../../components/background/background-component';
 
 export class UserPage {
   constructor(app, fb, user) {
@@ -9,6 +10,7 @@ export class UserPage {
     this.initUI();
     this.loadEventUI();
     new TimeComponent();
+    new BackgroundComponent();
   }
 
   initUI() {
@@ -17,7 +19,7 @@ export class UserPage {
     }
     let contentHtml = this.getPageSkeleton();
     this.app.insertAdjacentHTML('afterbegin', contentHtml);
-console.log(this.user.uid);
+    console.log(this.user.uid);
   }
 
   loadEventUI() {

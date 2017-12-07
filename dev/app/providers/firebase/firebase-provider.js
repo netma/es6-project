@@ -1,5 +1,5 @@
-import * as firebase from "firebase";
-import { CONFIG } from './config'
+import * as firebase from 'firebase';
+import { CONFIG } from './config';
 
 export class FirebaseProvider {
   constructor() {

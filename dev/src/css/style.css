@@ -4,12 +4,37 @@
   padding: 0;
 }
 
+html, body {
+  height: 100vh;
+}
+
+body {
+  color: #fff;
+  background-color: #000;
+  opacity: 0;
+  text-shadow: 1px 1px 300px black;
+  transition: 300ms all ease;
+}
+
+app {
+  display: block;
+}
+
 #time {
-  font-size: 120px;
+  font-size: 160px;
 }
 
 section {
-  display: flex;
   align-items: center;
-  flex-direction: column;
+  background-color: #000;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+footer {
+
 }
