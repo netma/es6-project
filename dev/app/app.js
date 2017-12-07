@@ -2,11 +2,16 @@ import { LoginPage } from './pages/login/login';
 import { UserPage } from './pages/user/user';
 import { FirebaseProvider } from './providers/firebase/firebase-provider';
 
+import { getRandomBackground } from './providers/pictures/pictures-provider';
+
 class MyApp {
   constructor() {
     this.app = document.querySelector('app');
     this.fb = new FirebaseProvider();
     this.start();
+
+    getRandomBackground();
+
   }
 
   start() {

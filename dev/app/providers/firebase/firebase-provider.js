@@ -8,7 +8,6 @@ export class FirebaseProvider {
     //console.log(firebase.database());
   }
 
-
   // Firebase signin with email + pwd
   createEmailAccount(email, password) {
     this.auth
