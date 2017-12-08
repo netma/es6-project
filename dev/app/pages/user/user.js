@@ -11,6 +11,9 @@ export class UserPage {
     this.loadEventUI();
     new TimeComponent();
     new BackgroundComponent();
+    this.addLink();
+    this.updateLink();
+    this.deleteLink();
   }
 
   initUI() {
@@ -50,6 +53,28 @@ export class UserPage {
         }
       }
     });
+
+    // update links
+    document.getElementById('editableLinks').addEventListener('click', event=>{
+      if (event.target.nodeName != 'BUTTON') {
+        return;
+      }
+      let li = event.target.closest('li');
+      switch (event.target.className) {
+        case 'save':
+          let updateData = {};
+          for (let i=0; i < li.childNodes.length; i++) {
+            if (li.childNodes[i].value) {
+              updateData[li.childNodes[i].name] = li.childNodes[i].value;
+            }
+          }
+          this.fb.firebaseUpdate(this.user.uid, li.id, updateData);
+          break;
+        case 'delete':
+          this.fb.firebaseRemove(this.user.uid, li.id);
+          break;
+      }
+    });
   }
 
   getPageSkeleton(user) {
@@ -74,5 +99,51 @@ export class UserPage {
       default:
         return 'Hello';
     }
+  }
+
+  // addHTML
+  addLink() {
+    this.fb.dataNode = 'links';
+    this.fb
+      .getFirebaseRef()
+      .child(this.user.uid)
+      .on('child_added', snapshot=>{
+        document.querySelector('#links').insertAdjacentHTML('beforeend', `
+          <li>
+            <a href="${snapshot.val().url}" target="_blank">${snapshot.val().label}</a>
+          </li>
+        `);
+        document.querySelector('#editableLinks').insertAdjacentHTML('beforeend', `
+          <li id="${snapshot.key}">
+            <input type="text" name="label" value="${snapshot.val().label}">
+            <input type="url" name="url" value="${snapshot.val().url}">
+            <button class="save">Save</button>
+            <button class="delete">Delete</button>
+          </li>
+        `);
+      });
+  }
+
+  updateLink() {
+    this.fb.dataNode = 'links';
+    this.fb
+      .getFirebaseRef()
+      .child(this.user.uid)
+      .on('child_changed', snapshot=>{
+
+
+
+
+      });
+  }
+
+  deleteLink() {
+    this.fb.dataNode = 'links';
+    this.fb
+      .getFirebaseRef()
+      .child(this.user.uid)
+      .on('child_removed', snapshot=>{
+        document.getElementById(snapshot.key).parentElement.removeChild(document.getElementById(snapshot.key));
+    });
   }
 }

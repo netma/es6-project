@@ -35,11 +35,34 @@ export class FirebaseProvider {
         });
   }
 
-  // add to firebase collection with .push()
+  // Add an item to firebase collection
   firebasePush(uid, data) {
     this.db
       .ref(this.dataNode)
       .child(uid)
       .push(data);
+  }
+
+  // Update FB element by ID with .update()
+  firebaseUpdate(uid, id, data) {
+    this.db
+      .ref(this.dataNode)
+      .child(uid)
+      .child(id)
+      .update(data);
+  }
+
+  // Delete an item from firebase collection
+  firebaseRemove(uid, id) {
+    this.db
+      .ref(this.dataNode)
+      .child(uid)
+      .child(id)
+      .remove();
+  }
+
+  // Get a reference on a data node
+  getFirebaseRef() {
+    return this.db.ref(this.dataNode);
   }
 }
