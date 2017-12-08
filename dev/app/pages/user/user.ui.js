@@ -4,9 +4,18 @@ export function userSkeleton(data) {
       <header>
         <button id="logout">Logout</button>
       </header>
-      <h2 id="time"></h2>
-      <h1 id="welcome">${data.greeting} ${data.username}!</h1>
+      <div id="content">
+        <h2 id="time"></h2>
+        <h1 id="welcome">${data.greeting} ${data.username}!</h1>
+      </div>
       <footer></footer>
     </section>
+    <aside>
+      <form id="addLink">
+        <input type="text" name="label" placeholder="Label">
+        <input type="text" name="url" placeholder="URL">
+        <button type="submit">Save</button>
+      </form>
+    </aside>
   `;
 }

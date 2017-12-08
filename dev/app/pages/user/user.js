@@ -23,8 +23,32 @@ export class UserPage {
   }
 
   loadEventUI() {
+    // logout
     document.querySelector('#logout').addEventListener('click', _=>{
       this.fb.auth.signOut();
+    });
+
+    // save new link
+    document.getElementById('addLink').addEventListener('submit', event=>{
+      event.preventDefault();
+      let validationInput = 0;
+      let formData = {};
+      let formInputs = document.getElementById('addLink').elements;
+      for (var i = 0; i < formInputs.length; i++) {
+        if (formInputs[i].value) {
+          formData[formInputs[i].name] = formInputs[i].value;
+          validationInput++;
+        }
+      }
+      if (validationInput === 2) {
+        this.fb.dataNode = 'links';
+        this.fb.firebasePush(this.user.uid, formData);
+      }
+      for (var i = 0; i < formInputs.length; i++) {
+        if (formInputs[i].value) {
+          formInputs[i].value = '';
+        }
+      }
     });
   }
 

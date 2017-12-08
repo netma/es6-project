@@ -5,7 +5,8 @@ export class FirebaseProvider {
   constructor() {
     firebase.initializeApp(CONFIG);
     this.auth = firebase.auth();
-    //console.log(firebase.database());
+    this.db = firebase.database();
+    this.dataNode = null;
   }
 
   // Firebase signin with email + pwd
@@ -32,5 +33,13 @@ export class FirebaseProvider {
           let errorMessage = error.message;
           alert(errorMessage)
         });
+  }
+
+  // add to firebase collection with .push()
+  firebasePush(uid, data) {
+    this.db
+      .ref(this.dataNode)
+      .child(uid)
+      .push(data);
   }
 }
