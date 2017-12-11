@@ -6,7 +6,7 @@ export class PicturesProvider {
   }
 
   getRandomPicture() {
-    return new Promise((resolve, reject)=>{
+/*    return new Promise((resolve, reject)=>{
       var xhr = new XMLHttpRequest();
       xhr.open('GET', this.params.queryRandomPictureUrl + this.params.applicationId);
       xhr.onload = () => {
@@ -18,6 +18,12 @@ export class PicturesProvider {
       };
       xhr.onerror = () => reject(Error(xhr.statusText));
       xhr.send();
-    });
+    });*/
+
+    return fetch(this.params.queryRandomPictureUrl + this.params.applicationId, {
+      method: 'GET'
+    })
+    .then(res=> res.json())
+    .catch(err => alert(err.toString()));
   }
 }
